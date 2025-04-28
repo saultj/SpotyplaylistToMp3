@@ -27,7 +27,7 @@ def main():
                 sys.exit(1)
         else:
             print("Pues nada tu no lo instales")
-            sys.extit(1)
+            sys.exit(1)
                         
 
     playlist_url = input("URL de tu playlist (que sea publica por favor):\n-> ").strip()
