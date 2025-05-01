@@ -5,7 +5,7 @@ Built for those who want an easy, no-nonsense solution.
 
 ## Features 🚀
 - Checks if `spotdl` is installed and offers to install it automatically.
-- Downloads public Spotify playlists to a chosen folder.
+- Downloads public Spotify playlists or albums to a chosen folder.
 - Ensures playlist quality at 320kbps.
 - Friendly and clear console messages — no weird jargon.
 
@@ -34,7 +34,7 @@ Or just run the script and it will guide you.
    python downloader.py
    ```
 3. Follow the prompts:
-   - Paste your **public** Spotify playlist URL.
+   - Paste your **public** Spotify playlist URL or album URL.
    - Choose your absolute download path.
 4. Done! Songs will be downloaded at premium quality.
 
