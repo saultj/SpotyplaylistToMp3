@@ -17,20 +17,28 @@ def main():
         resultado = subprocess.run(["spotdl", "--version"], check=True, capture_output=True, text=True)
         print(f"Bien bro lo tienes, versión: {resultado.stdout.strip()}")
     except (subprocess.CalledProcessError, FileNotFoundError):
-        instalar= input("No lo tienes instalado jefe, quieres? (s/n)\n-> ")
+        instalar = input("No lo tienes instalado jefe, quieres? (s/n)\n-> ")
         if instalar == 's':
             try:
                 subprocess.run([sys.executable, "-m", "pip", "install", "spotdl"], check=True)
                 print("Instalado correctamente socio, ya puedes seguir")
             except subprocess.CalledProcessError:
-                print("Error al instalar.")
+                print("Error al instalar. Revisa tu entorno python chaval.")
                 sys.exit(1)
         else:
             print("Pues nada tu no lo instales")
             sys.exit(1)
-                        
 
-    playlist_url = input("URL de tu playlist (que sea publica por favor):\n-> ").strip()
+    # Recoge las playlists
+    playlist_urls = []
+    while True:
+        playlist_url = input("URL de tu album o playlist (que sea publica por favor):\n-> ").strip()
+        playlist_urls.append(playlist_url)
+        
+        otra = input("¿Quieres añadir más? (s/n):\n-> ").strip().lower()
+        if otra != 's':
+            break
+    
     download_path = input("Ruta para descargar (ruta ABSOLUTA):\n-> ").strip()
 
     # Chekea la ruta
@@ -43,14 +51,18 @@ def main():
             print("Sin ruta válida no se puede, espabila chaval.")
             return
 
-    # Ejecutamos spotdl para proceder con la descarga
-    try:
-        print("Descargando tus canciones...")
-        # Aquí configuramos una calidad premium y la ruta de descarga
-        subprocess.run(["spotdl", "--bitrate", "320K", "--output", download_path, playlist_url], check=True)
-        print("Disfruta tus temas rey")
-    except subprocess.CalledProcessError:
-        print("Error al descargar (Has instalado spotdl?) (La playlist es publica?)")
+    # Descargamos cada playlist
+    for i, playlist_url in enumerate(playlist_urls, 1):
+        try:
+            print(f"\nDescargando lista {i} de {len(playlist_urls)}...")
+            # Aquí configuramos una calidad premium y la ruta de descarga
+            subprocess.run(["spotdl", "--bitrate", "320K", "--output", download_path, playlist_url], check=True)
+            print(f"Playlist {i} descargada con éxito")
+        except subprocess.CalledProcessError:
+            print(f"Error al descargar la playlist {i} (¿La playlist es publica? ¿Has puesto bien el link?)")
+            continue
+    
+    print("\n¡Proceso completo! Disfruta tu music rey")
 
 if __name__ == "__main__":
     main()
